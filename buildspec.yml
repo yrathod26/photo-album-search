@@ -1,0 +1,10 @@
+version: 0.1
+phases:
+  install:
+    commands:
+      - aws cloudformation package --template-file samTemplate.yaml --s3-bucket cc-hw3-lambda --output-template-file outputSamTemplate.yaml CAPABILITY_AUTO_EXPAND --capabilities
+artifacts:
+  type: zip
+  files:
+    - samTemplate.yaml
+    - outputSamTemplate.yaml

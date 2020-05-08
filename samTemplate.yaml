@@ -1,0 +1,40 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: CD Demo Lambda
+Resources:
+  ImageIndexing:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: ImageIndexing.lambda_handler
+      Runtime: python3.8
+      CodeUri: ./LambdaCode
+      Description: 'Lambda function for CD Demo'
+      MemorySize: 128
+      Timeout: 30
+      Role: 'arn:aws:iam::636938905002:role/service-role/ImageIndexing-role-ed1rbua7'
+      Events:
+        S3FileListener:
+          Type: S3
+          Properties:
+            Bucket: cc-hw3-photos
+            Events: s3:ObjectCreated:*
+      VpcConfig:
+        SubnetIds:
+         - subnet-0611eef784e7ca85a
+        SecurityGroupIds:
+         - sg-09f7d9d23d7140860
+  ImageSearch:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: ImageSearch.lambda_handler
+      Runtime: python3.8
+      CodeUri: ./LambdaCode
+      Description: 'Lambda function for CD Demo'
+      MemorySize: 128
+      Timeout: 30
+      Role: 'arn:aws:iam::636938905002:role/service-role/ImageSearch-role-xtwetbwh'
+      VpcConfig:
+        SubnetIds:
+         - subnet-0611eef784e7ca85a
+        SecurityGroupIds:
+         - sg-09f7d9d23d7140860
